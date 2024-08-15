@@ -5,11 +5,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-     ports:
-      - "8080:8080"
-    env:
+    ports:
+    - "8080:8080"
+    environment:
       BACKEND_PORT: 9000
-      BACKEND_DNS: localhost
+      BACKEND_DNS: backend
     depends_on:
       - backend
   
@@ -17,6 +17,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    env:
-      REDIS_DNS: blank
+    # environment:
+    #   REDIS_DNS: something here when we have redis
 
