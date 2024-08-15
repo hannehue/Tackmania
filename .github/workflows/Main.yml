@@ -60,3 +60,18 @@ jobs:
 
             -   name: Push frontend
                 run: docker push ghcr.io/${{ env.docker_username }}/trackmania-frontend:${{ github.sha }}
+
+    integration_tests:
+        name: "Run integration tests"
+        runs-on: ubuntu-latest
+        needs: [ build_backend_docker, build_frontend_docker ]
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    sparse-checkout: integration-tests
+            
+            -   name: Run integration tests
+                run: bash run-tests.sh
+                working-directory: integration-tests
+                env:
+                    SHA_TO_TEST: ${{ github.sha }}
