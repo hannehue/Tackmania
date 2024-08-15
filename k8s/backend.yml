@@ -22,9 +22,9 @@ spec:
       containers:
         - name: trackmania-backend
           image: ghcr.io/hannehue/trackmania-backend:c8e1dbe9cb429da2b106e4e5401368b1dca1df81
-          env:
-            - name: REDIS_DNS
-              value: "redis-service"
+          envFrom:
+            - configMapRef:
+              name: backend-config
           resources:
             limits:
               memory: "128Mi"
