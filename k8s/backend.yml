@@ -24,7 +24,7 @@ spec:
           image: ghcr.io/hannehue/trackmania-backend:c8e1dbe9cb429da2b106e4e5401368b1dca1df81
           envFrom:
             - configMapRef:
-              name: backend-config
+                name: backend-config
           resources:
             limits:
               memory: "128Mi"
