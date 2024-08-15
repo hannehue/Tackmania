@@ -44,3 +44,13 @@ jobs:
     - name: Test
       run: go test
       working-directory: backend
+      
+  Linting:
+    name: "Linting"
+    runs-on: ubuntu-latest
+    steps:
+      - name: run linting
+        uses: super-linter/super-linter/slim@v5 
+        env:
+          # To report GitHub Actions status checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
