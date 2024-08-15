@@ -71,7 +71,7 @@ jobs:
                     sparse-checkout: integration-tests
             
             -   name: Run integration tests
-                run: bash run-tests.sh
+                run: bash run_tests.sh
                 working-directory: integration-tests
                 env:
                     SHA_TO_TEST: ${{ github.sha }}
