@@ -16,8 +16,8 @@ var BACKEND_DNS=getEnv("BACKEND_DNS", "localhost")
 var BACKEND_PORT=getEnv("BACKEND_PORT", "9000")
 
 type fortune struct {
-	ID      string `json:"id" redis:"id"`
-	Message string `json:"message" redis:"message"`
+    ID      string `json:"id" redis:"id"`
+    Message string `json:"message" redis:"message"`
 }
 
 type newFortune struct {
