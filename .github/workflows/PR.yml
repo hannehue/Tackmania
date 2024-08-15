@@ -56,5 +56,6 @@ jobs:
         uses: super-linter/super-linter/slim@v5 
         env:
           DEFAULT_BRANCH: ${{ github.event.pull_request.base.ref }}
+          FILTER_REGEX_EXCLUDE: .*.md
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
