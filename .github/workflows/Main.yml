@@ -76,7 +76,7 @@ jobs:
                 env:
                     SHA_TO_TEST: ${{ github.sha }}
 
-    deploy_to_kubernetes:
+    deploy_to_staging:
         needs: [integration_tests]
         name: "Deploy images to kubernetes"
         runs-on: ubuntu-latest
@@ -87,6 +87,24 @@ jobs:
             -   name: "Pull kubeconfig"
                 run: |
                     echo "${{secrets.STAGING_KUBECONFIG}}" >> config
+            -   name: "Deploy frontend"
+                run: kubectl --kubeconfig config set image deployment trackmania-frontend trackmania-frontend=ghcr.io/hannehue/trackmania-frontend:${{github.sha}}
+            -   name: "Deploy backend"
+                run: kubectl --kubeconfig config set image deployment trackmania-backend trackmania-backend=ghcr.io/hannehue/trackmania-backend:${{github.sha}}
+
+
+    deploy_to_production:
+        needs: [deploy_to_staging]
+        name: "Deploy images to kubernetes"
+        runs-on: ubuntu-latest
+        environment: Production 
+        permissions:
+            packages: read
+        
+        steps:
+            -   name: "Pull kubeconfig"
+                run: |
+                    echo "${{secrets.PROD_KUBECONFIG}}" >> config
             -   name: "Deploy frontend"
                 run: kubectl --kubeconfig config set image deployment trackmania-frontend trackmania-frontend=ghcr.io/hannehue/trackmania-frontend:${{github.sha}}
             -   name: "Deploy backend"
