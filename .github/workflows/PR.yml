@@ -7,7 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-frontend:
+    name: "Build and test frontend"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -18,8 +19,28 @@ jobs:
         go-version: '1.21'
 
     - name: Build
-      run: go build -v ./...
+      run: go build
+      working-directory: frontend
 
     - name: Test
-      run: go test -v ./...
+      run: go test
+      working-directory: frontend
 
+  build-backend:
+    name: "Build and test backend"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+
+    - name: Build
+      run: go build
+      working-directory: backend
+
+    - name: Test
+      run: go test
+      working-directory: backend
