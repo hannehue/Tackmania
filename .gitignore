@@ -3,3 +3,6 @@ backend/backend
 
 # frontend binary
 frontend/frontend
+
+#For docker-compose
+redis-data/
