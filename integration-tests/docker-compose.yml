@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  test:
+    build: .
+    environment:
+      FRONTEND_URL: http://frontend:8080
+      BACKEND_URL: http://backend:9000
+    depends_on:
+      - frontend
+  frontend:
+    image: ghcr.io/hannehue/trackmania-frontend:${SHA_TO_TEST}
+    environment:
+      BACKEND_PORT: 9000
+      BACKEND_DNS: backend
+    depends_on:
+      - backend
+  backend:
+    image: ghcr.io/hannehue/trackmania-backend:${SHA_TO_TEST}
+    environment:
+      REDIS_DNS: database
+    depends_on:
+      - database
+  database:
+    image: redis:7.4
