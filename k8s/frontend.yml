@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: trackmania-frontend
-          image: ghcr.io/hannehue/trackmania-frontend
+          image: ghcr.io/hannehue/trackmania-frontend:c8e1dbe9cb429da2b106e4e5401368b1dca1df81
           env:
             - name: BACKEND_PORT
               value: "9000"
