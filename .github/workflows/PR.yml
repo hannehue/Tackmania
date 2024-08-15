@@ -49,6 +49,7 @@ jobs:
     name: "Linting"
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: run linting
         uses: super-linter/super-linter/slim@v5 
         env:
