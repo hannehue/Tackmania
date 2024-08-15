@@ -90,4 +90,4 @@ jobs:
             -   name: "Deploy frontend"
                 run: kubectl --kubeconfig config set image deployment trackmania-frontend trackmania-frontend=ghcr.io/hannehue/trackmania-frontend:${{github.sha}}
             -   name: "Deploy backend"
-                run: kubectl --kubeconfig config set image deployment trackmania-backend trackmania-frontend=ghcr.io/hannehue/trackmania-backend:${{github.sha}}
+                run: kubectl --kubeconfig config set image deployment trackmania-backend trackmania-backend=ghcr.io/hannehue/trackmania-backend:${{github.sha}}
