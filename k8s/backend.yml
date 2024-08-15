@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: trackmania-backend
+  name: trackmania-backend
+spec:
+  selector:
+    matchLabels:
+      app: trackmania-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: trackmania-backend
+    spec:
+      containers:
+        - name: trackmania-backend
+          image: ghcr.io/hannehue/trackmania-backend
+          # env:
+          #   - name: REDIS_DNS
+          #     value: "glem det"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: trackmania-backend
+  name: trackmania-backend-service
+spec:
+  selector:
+    app: trackmania-backend
+  ports:
+    - port: 9000
+      protocol: TCP
+      targetPort: 9000
+  type: ClusterIP
