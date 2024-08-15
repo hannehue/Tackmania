@@ -78,15 +78,16 @@ jobs:
 
     deploy_to_staging:
         needs: [integration_tests]
-        name: "Deploy images to kubernetes"
+        name: "Deploy images to Staging"
         runs-on: ubuntu-latest
+        environment: Staging
         permissions:
             packages: read
         
         steps:
             -   name: "Pull kubeconfig"
                 run: |
-                    echo "${{secrets.STAGING_KUBECONFIG}}" >> config
+                    echo "${{secrets.KUBECONFIG}}" >> config
             -   name: "Deploy frontend"
                 run: kubectl --kubeconfig config set image deployment trackmania-frontend trackmania-frontend=ghcr.io/hannehue/trackmania-frontend:${{github.sha}}
             -   name: "Deploy backend"
@@ -95,7 +96,7 @@ jobs:
 
     deploy_to_production:
         needs: [deploy_to_staging]
-        name: "Deploy images to kubernetes"
+        name: "Deploy images to Production"
         runs-on: ubuntu-latest
         environment: Production 
         permissions:
@@ -104,7 +105,7 @@ jobs:
         steps:
             -   name: "Pull kubeconfig"
                 run: |
-                    echo "${{secrets.PROD_KUBECONFIG}}" >> config
+                    echo "${{secrets.KUBECONFIG}}" >> config
             -   name: "Deploy frontend"
                 run: kubectl --kubeconfig config set image deployment trackmania-frontend trackmania-frontend=ghcr.io/hannehue/trackmania-frontend:${{github.sha}}
             -   name: "Deploy backend"
