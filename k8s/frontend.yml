@@ -9,6 +9,11 @@ spec:
     matchLabels:
       app: trackmania-frontend
   replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0%
+    type: RollingUpdate
   template:
     metadata:
       labels:
