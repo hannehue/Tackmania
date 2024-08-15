@@ -20,7 +20,7 @@ spec:
             claimName: redis-pvc # name of the actual pvc
       containers:
         - name: redis
-          image: redis:4.7
+          image: redis:7.4
           ports:
             - containerPort: 6379
           volumeMounts:
