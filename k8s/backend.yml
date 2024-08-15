@@ -17,9 +17,9 @@ spec:
       containers:
         - name: trackmania-backend
           image: ghcr.io/hannehue/trackmania-backend
-          # env:
-          #   - name: REDIS_DNS
-          #     value: "glem det"
+          env:
+            - name: REDIS_DNS
+              value: "redis-service"
           resources:
             limits:
               memory: "128Mi"
