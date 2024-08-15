@@ -1,0 +1,49 @@
+
+name: Build and Deploy
+on:
+    push:
+        branches: [ "main" ]
+
+    # Allows manual triggering of the workflow
+    workflow_dispatch: 
+
+env:
+    docker_username: "hannehue" #Hardcoded for clarity of which docker-account we're using.
+    docker_password: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+    build_backend_docker:
+        name: "Build and push backend docker"
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    sparse-checkout: backend # Fetches only the backend folder
+
+            -   name: Build backend
+                run: docker build -t ghcr.io/${{ env.docker_username }}/trackmania-backend:${{ github.sha }} .
+                working-directory: backend
+
+            -   name: Push backend
+                run: docker push ghcr.io/${{ env.docker_username }}/trackmania-backend:${{ github.sha }}
+
+    build_frontend_docker:
+        name: "Build and push frontend docker"
+        runs-on: ubuntu-latest
+        permissions:
+            packages: write
+
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    sparse-checkout: frontend
+
+            -   name: Build frontend
+                run: docker build -t ghcr.io/${{ env.docker_username }}/trackmania-frontend:${{ github.sha }} .
+                working-directory: frontend
+
+            -   name: Push frontend
+                run: docker push ghcr.io/${{ env.docker_username }}/trackmania-frontend:${{ github.sha }}
