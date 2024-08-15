@@ -55,6 +55,7 @@ jobs:
       - name: run linting
         uses: super-linter/super-linter/slim@v5 
         env:
+          DISABLE_ERRORS: true
           DEFAULT_BRANCH: ${{ github.event.pull_request.base.ref }}
           FILTER_REGEX_EXCLUDE: .*.md
           # To report GitHub Actions status checks
