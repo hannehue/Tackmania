@@ -13,4 +13,6 @@ RUN go mod download \
 
 FROM scratch as runner
 COPY --from=builder /build/app /app
+COPY static /static
+COPY templates /templates
 ENTRYPOINT ["/app"]
