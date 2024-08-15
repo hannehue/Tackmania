@@ -60,3 +60,16 @@ jobs:
           FILTER_REGEX_EXCLUDE: .*.md
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+  SecurityScann:
+    name: "trivy scan"
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          severity: CRITICAL
+          exit-code: '1'
