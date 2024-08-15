@@ -14,11 +14,19 @@ spec:
       labels:
         app: redis
     spec:
+      volumes:
+        - name: redis-pvc
+          persistentVolumeClaim:
+            claimName: redis-pvc # name of the actual pvc
       containers:
         - name: redis
           image: redis:4.7
           ports:
             - containerPort: 6379
+          volumeMounts:
+            - name: redis-pvc
+              mountPath: /data
+              subPath: redis
 ---
 apiVersion: v1
 kind: Service
@@ -34,3 +42,15 @@ spec:
       protocol: TCP
       targetPort: 6379
   type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-pvc
+spec:
+  storageClassName: "gp2"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
