@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: trackmania-frontend
+  name: trackmania-frontend
+spec:
+  selector:
+    matchLabels:
+      app: trackmania-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: trackmania-frontend
+    spec:
+      containers:
+        - name: trackmania-frontend
+          image: ghcr.io/hannehue/trackmania-frontend
+          env:
+            - name: BACKEND_PORT
+              value: "9000"
+            - name: BACKEND_DNS
+              value: "trackmania-backend-service"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: trackmania-frontend
+  name: trackmania-frontend-service
+spec:
+  selector:
+    app: trackmania-frontend
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: ClusterIP
